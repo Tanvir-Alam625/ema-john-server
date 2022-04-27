@@ -26,10 +26,24 @@ async function run() {
   try {
     await client.connect();
     const productCollection = client.db("emaJohnDB").collection("products");
+
     app.get("/product", async (req, res) => {
+      console.log("query", req.query);
+      const page = parseInt(req.query.page);
+      const size = parseInt(req.query.size);
       const query = {};
       const cursor = productCollection.find(query);
-      const products = await cursor.toArray();
+      let products;
+      if (page || size) {
+        products = await cursor
+          .skip(page * size)
+          .limit(size)
+          .toArray();
+        console.log(page, size);
+      } else {
+        products = await cursor.limit(20).toArray();
+      }
+
       res.send(products);
     });
     app.get("/productCount", async (req, res) => {
