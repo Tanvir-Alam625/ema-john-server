@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 //API
 app.get("/", (req, res) => {
-  res.send("server is running");
+  res.send(" jma john server is running");
 });
 app.listen(port, () => {
   console.log("port is running", port);
@@ -64,10 +64,3 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-// client.connect((err) => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-//   console.log("connected");
-// });
