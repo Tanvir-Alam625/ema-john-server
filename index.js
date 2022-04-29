@@ -9,12 +9,6 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 //API
-app.get("/", (req, res) => {
-  res.send(" jma john server is running");
-});
-app.listen(port, () => {
-  console.log("port is running", port);
-});
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.be5rp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
@@ -57,10 +51,14 @@ async function run() {
       const cursor = productCollection.find(query);
       const products = await cursor.toArray();
       res.send(products);
-
-      console.log(keys);
     });
   } finally {
   }
 }
 run().catch(console.dir);
+app.get("/", (req, res) => {
+  res.send(" jma john server is running");
+});
+app.listen(port, () => {
+  console.log("port is running", port);
+});
